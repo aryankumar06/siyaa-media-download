@@ -25,7 +25,8 @@ const PORT = process.env.PORT || 3000;
 const SERVER_URL = process.env.SERVER_URL || `http://localhost:${PORT}`;
 
 setInterval(() => {
-  require('http').get(SERVER_URL, (res) => {
+  const httpModule = SERVER_URL.startsWith('https:') ? require('https') : require('http');
+  httpModule.get(SERVER_URL, (res) => {
     console.log(`Keep-alive ping sent to ${SERVER_URL} - Status: ${res.statusCode}`);
   }).on('error', (err) => {
     console.log(`Keep-alive ping failed: ${err.message}`);
