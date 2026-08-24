@@ -4,7 +4,7 @@ const { spawn } = require('child_process');
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const fs = require('fs');
 const path = require('path');
-const { v4: uuidv4 } = require('uuid');
+const { randomUUID } = require('crypto');
 
 const app = express();
 app.use(cors());
@@ -42,7 +42,7 @@ app.post('/api/download', (req, res) => {
     return res.status(400).json({ error: 'URL is required' });
   }
 
-  const id = uuidv4();
+  const id = randomUUID();
   let args = [];
   let expectedFilename = '';
 
