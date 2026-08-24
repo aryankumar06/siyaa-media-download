@@ -54,7 +54,8 @@ app.post('/api/download', (req, res) => {
       '--extract-audio',
       '--audio-format', 'mp3',
       '--ffmpeg-location', ffmpegPath,
-      '--extractor-args', 'youtube:player_client=android',
+      '--force-ipv4',
+      '--extractor-args', 'youtube:player_client=ios,tv',
       '-o', path.join(FILES_DIR, expectedFilename),
       url
     ];
@@ -64,7 +65,8 @@ app.post('/api/download', (req, res) => {
       '-f', 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
       '--merge-output-format', 'mp4',
       '--ffmpeg-location', ffmpegPath,
-      '--extractor-args', 'youtube:player_client=android',
+      '--force-ipv4',
+      '--extractor-args', 'youtube:player_client=ios,tv',
       '-o', path.join(FILES_DIR, expectedFilename),
       url
     ];
@@ -90,7 +92,7 @@ app.post('/api/download', (req, res) => {
       
       // Now fetch metadata
       const { exec } = require('child_process');
-      exec(`${YT_DLP_PATH} -J --extractor-args "youtube:player_client=android" "${url}"`, { maxBuffer: 1024 * 1024 * 10 }, (err, stdout, stderr) => {
+      exec(`${YT_DLP_PATH} -J --force-ipv4 --extractor-args "youtube:player_client=ios,tv" "${url}"`, { maxBuffer: 1024 * 1024 * 10 }, (err, stdout, stderr) => {
         let title = "Unknown Title";
         let thumbnail = "https://picsum.photos/seed/picsum/400/225";
         let duration = "Unknown";
